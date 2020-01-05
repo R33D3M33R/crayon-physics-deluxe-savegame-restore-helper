@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Crayon Physics Deluxe Savegame Restore Helper</title>
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+
+	<style>
+		* {-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;}
+		body {background: #f5f5f5; color: #333}
+		header, footer, main {max-width: 600px; margin: 0 auto; padding: 25px; }
+		header, footer {background: #f0f0f0; text-align: center;}
+		#file-input-wrap {border: 1px dotted #333; height: 300px; position: relative; overflow-y: auto;}
+		#file-input-instruction, #file-input {position: absolute;  }
+		#file-input-instruction {top: 50%; left: 50%; transform: translate(-50%, -50%)}
+		#file-input {left: 0; top: 0; right: 0; bottom: 0; opacity: 0; display: block;  cursor: pointer; width: 100%}
+		#file-output {line-height: 1;color: #fff;background: #61a14b;border-radius: 12px;font-size: 12px;text-transform: uppercase;letter-spacing: 2px;font-weight: 700;border: 0;cursor: pointer;padding: 6px 16px;-webkit-transition: all 0.4s;transition: all 0.4s; text-decoration: none}
+		#file-output[href=""] {opacity: 0.3; cursor: not-allowed;   pointer-events: none;}
+		#file-output:hover, #file-output:active, #file-output:focus {color: #fff;background: #184d75}
+	</style>
+
+	<script>
+(function($){$(document).ready( function() {
+	var levelList = $($.parseXML('<LevelList version="5" >\n' + '  <LastPlayedLevel>\n' + '  </LastPlayedLevel> \n' + '  <Level completed="1" filename="" position="0" >\n' + '  </Level>\n' + '  <Level completed="0" filename="data/levels/tutorial_draw_a_box.xml" position="1" level_name="Apple Tree" >\n' + '  </Level>\n' + '  <Level completed="0" filename="data/levels/level_house.xml" position="2" level_name="Home Sweet Home" >\n' + '  </Level>\n' + '  <Level completed="0" filename="data/levels/level_03.xml" position="3" level_name="First Obstacle" >\n' + '  </Level>\n' + '  <Level completed="0" filename="data/levels/tutorial_draw_a_line.xml" position="4" level_name="Line Castle" >\n' + '  </Level>\n' + '  <Level completed="0" filename="data/levels/level_04.xml" position="5" level_name="Crayon Gap" >\n' + '  </Level>\n' + '  <Level completed="0" filename="data/levels/level_liukumaki.xml" position="6" level_name="Slicks \'n Slide" >\n' + '  </Level>\n' + '  <Level completed="0" filename="data/levels/level_05.xml" position="7" level_name="T Time" >\n' + '  </Level>\n' + '  <Level completed="0" filename="data/levels/level_06.xml" position="8" level_name="Two Clouds and Stars" >\n' + '  </Level>\n' + '  <Level completed="0" filename="data/levels/level_07.xml" position="9" level_name="Catapult" >\n' + '  </Level>\n' + '  <Level completed="0" filename="data/levels/level_castlebridge.xml" position="10" level_name="Rotating Castle" >\n' + '  </Level>\n' + '  <Level completed="0" filename="data/levels/level_lighthouse.xml" position="11" level_name="Lighthouse" >\n' + '  </Level>\n' + '  <Level completed="0" filename="data/levels/level_09.xml" position="12" level_name="Remember Me?" >\n' + '  </Level>\n' + '  <Level completed="0" filename="data/levels/level_10.xml" position="13" level_name="A Real Catapult" >\n' + '  </Level>\n' + '  <Level completed="0" filename="data/levels/level_11.xml" position="14" level_name="Nasty revisited" >\n' + '  </Level>\n' + '  <Level completed="0" filename="data/levels/level_12.xml" position="15" level_name="Crayon Golf" >\n' + '  </Level>\n' + '  <Level completed="0" filename="data/levels/level_pin_playground.xml" position="16" level_name="Hinge Playground" >\n' + '  </Level>\n' + '  <Level completed="0" filename="data/levels/level_14.xml" position="17" level_name="Machine" >\n' + '  </Level>\n' + '  <Level completed="0" filename="data/levels/level_15.xml" position="18" level_name="Hinge Gap" >\n' + '  </Level>\n' + '  <Level completed="0" filename="data/levels/level_pin_triangle.xml" position="19" level_name="Golfing" >\n' + '  </Level>\n' + '  <Level completed="0" filename="data/levels/level_16.xml" position="20" level_name="Leap of Faith" >\n' + '  </Level>\n' + '  <Level completed="0" filename="data/levels/level_pin_lift.xml" position="21" level_name="Hinge Lift" >\n' + '  </Level>\n' + '  <Level completed="0" filename="data/levels/level_big_seesaw.xml" position="22" level_name="Bathtub Seesaw" >\n' + '  </Level>\n' + '  <Level completed="0" filename="data/levels/level_18.xml" position="23" level_name="You can\'t have a physics game without seesaws" >\n' + '  </Level>\n' + '  <Level completed="0" filename="data/levels/tutorial_axle_drawing.xml" position="24" level_name="Draw Your Own Pins" >\n' + '  </Level>\n' + '  <Level completed="0" filename="data/levels/level_golf.xml" position="25" level_name="More Golf" >\n' + '  </Level>\n' + '  <Level completed="0" filename="data/levels/level_21.xml" position="26" level_name="Mr.T is Hanging Around" >\n' + '  </Level>\n' + '  <Level completed="0" filename="data/levels/level_rainbow.xml" position="27" level_name="Needs more Unicorn" >\n' + '  </Level>\n' + '  <Level completed="0" filename="data/levels/level_owl_cave.xml" position="28" level_name="Owl Cave" >\n' + '  </Level>\n' + '  <Level completed="0" filename="data/levels/level_force_pin.xml" position="29" level_name="Pin Swing" >\n' + '  </Level>\n' + '  <Level completed="0" filename="data/levels/level_pinhill.xml" position="30" level_name="Falling to Emptiness" >\n' + '  </Level>\n' + '  <Level completed="0" filename="data/levels/level_23.xml" position="31" level_name="Underside" >\n' + '  </Level>\n' + '  <Level completed="0" filename="data/levels/level_liftoff.xml" position="32" level_name="Nameless One" >\n' + '  </Level>\n' + '  <Level completed="0" filename="data/levels/rocket_tutorial.xml" position="33" level_name="Draw Yet Another Box" >\n' + '  </Level>\n' + '  <Level completed="0" filename="data/levels/rocket_playground.xml" position="34" level_name="Rocket Car!" >\n' + '  </Level>\n' + '  <Level completed="0" filename="data/levels/rocket_hill.xml" position="35" level_name="It\'s all about Timing" >\n' + '  </Level>\n' + '  <Level completed="0" filename="data/levels/rocket_in_the_sky.xml" position="36" level_name="Rocket in the Sky" >\n' + '  </Level>\n' + '  <Level completed="0" filename="data/levels/rocket_dino.xml" position="37" level_name="Rocket and a Brontosaurus" >\n' + '  </Level>\n' + '  <Level completed="0" filename="data/levels/level_construction.xml" position="38" level_name="Construction Set" >\n' + '  </Level>\n' + '  <Level completed="0" filename="data/levels/rocket_kinky_hill.xml" position="39" level_name="Hill Ride" >\n' + '  </Level>\n' + '  <Level completed="0" filename="data/levels/rocket_lift.xml" position="40" level_name="Rocket Loop" >\n' + '  </Level>\n' + '  <Level completed="0" filename="data/levels/rocket_platforms.xml" position="41" level_name="Nasty Rockets" >\n' + '  </Level>\n' + '  <Level completed="0" filename="data/levels/rocket_castle.xml" position="42" level_name="Rocket and a Castle" >\n' + '  </Level>\n' + '  <Level completed="0" filename="data/levels/rope_tutorial.xml" position="43" level_name="Draw a Rope" >\n' + '  </Level>\n' + '  <Level completed="0" filename="data/levels/rope_hammer.xml" position="44" level_name="Ewoke Trap" >\n' + '  </Level>\n' + '  <Level completed="0" filename="data/levels/level_car.xml" position="45" level_name="It\'s a Car!" >\n' + '  </Level>\n' + '  <Level completed="0" filename="data/levels/rope_castle.xml" position="46" level_name="Draw the Bridge" >\n' + '  </Level>\n' + '  <Level completed="0" filename="data/levels/rope_graveyard.xml" position="47" level_name="Graveyard" >\n' + '  </Level>\n' + '  <Level completed="0" filename="data/levels/level_hill.xml" position="48" level_name="Underneat the clouds" >\n' + '  </Level>\n' + '  <Level completed="0" filename="data/levels/level_nasty_hill.xml" position="49" level_name="Uphill" >\n' + '  </Level>\n' + '  <Level completed="0" filename="data/levels/rope_kinkyground.xml" position="50" level_name="Kinky Ropes" >\n' + '  </Level>\n' + '  <Level completed="0" filename="data/levels/level_dinosaur.xml" position="51" level_name="Sliding Down the Dinosaur\'s Back" >\n' + '  </Level>\n' + '  <Level completed="0" filename="data/levels/level_sun_n_clouds.xml" position="52" level_name="Mario style Sun" >\n' + '  </Level>\n' + '  <Level completed="0" filename="data/levels/level_29.xml" position="53" level_name="Hmmmmm..." >\n' + '  </Level>\n' + '  <Level completed="0" filename="data/levels/level_30.xml" position="54" level_name="Elegant" >\n' + '  </Level>\n' + '  <Level completed="0" filename="data/levels/level_spaceship.xml" position="55" level_name="Traveling Through Space" >\n' + '  </Level>\n' + '  <Level completed="0" filename="data/levels/level_31.xml" position="56" level_name="Darn Poles" >\n' + '  </Level>\n' + '  <Level completed="0" filename="data/levels/level_castle_on_the_hill.xml" position="57" level_name="Castle on the Hill" >\n' + '  </Level>\n' + '  <Level completed="0" filename="data/levels/level_32.xml" position="58" level_name="Emptiness" >\n' + '  </Level>\n' + '  <Level completed="0" filename="data/levels/rocket_cloud_n_moon.xml" position="59" level_name="Rockets, Cloud and the Moon" >\n' + '  </Level>\n' + '  <Level completed="0" filename="data/levels/level_kinky_const.xml" position="60" level_name="Can\'t think of a proper name" >\n' + '  </Level>\n' + '  <Level completed="0" filename="data/levels/level_33.xml" position="61" level_name="Revisting the Old Favorite" >\n' + '  </Level>\n' + '  <Level completed="0" filename="data/levels/level_34.xml" position="62" level_name="Gravity, my Old Enemy" >\n' + '  </Level>\n' + '  <Level completed="0" filename="data/levels/level_well.xml" position="63" level_name="Wishing Well" >\n' + '  </Level>\n' + '  <Level completed="0" filename="data/levels/level_no_ropies.xml" position="64" level_name="No Ropes" >\n' + '  </Level>\n' + '  <Level completed="0" filename="data/levels/level_killer_h.xml" position="65" level_name="Killer H" >\n' + '  </Level>\n' + '  <Level completed="0" filename="data/levels/level_nastiness_waits.xml" position="66" level_name="The End?" >\n' + '  </Level>\n' + '  <Level completed="0" filename="data/levels/box2d.xml" position="67" level_name="Box 2D" >\n' + '  </Level>\n' + '  <Level completed="0" filename="data/levels/daytime.xml" position="68" level_name="Day Cycle" >\n' + '  </Level>\n' + '  <Level completed="0" filename="data/levels/eating_disorder.xml" position="69" level_name="Eating Disorder" >\n' + '  </Level>\n' + '  <Level completed="0" filename="data/levels/mr_bean.xml" position="70" level_name="Mr.Bean" >\n' + '  </Level>\n' + '  <Level completed="0" filename="data/levels/pirate_ship.xml" position="71" level_name="Ohoy!" >\n' + '  </Level>\n' + '  <Level completed="0" filename="data/levels/self_portrait.xml" position="72" level_name="Self Portrait" >\n' + '  </Level>\n' + '  <Level completed="0" filename="data/levels/the_end.xml" position="73" level_name="Wake Up Mr. Newton" >\n' + '  </Level>\n' + '  <Level completed="0" filename="data/levels/level_stars_n_moon.xml" position="74" level_name="Stars and the Moon" >\n' + '  </Level>\n' + '  <Level completed="0" filename="data/levels/level_26.xml" position="75" level_name="Small pult" >\n' + '  </Level>\n' + '  <Level completed="0" filename="data/levels/rope_smb.xml" position="76" level_name="" >\n' + '  </Level>\n' + '  <Level completed="0" filename="data/levels/level_cave_story.xml" position="77" level_name="Cave Story" >\n' + '  </Level>\n' + '\n' + '  <StarManager>\n' + '  </StarManager>\n' + '</LevelList>'));
+
+		var fileInput = $('#file-input');
+		var fileOutput = $('#file-output');
+		var fileInputList = $('#file-input-list');
+		var fileInputInstruction = $('#file-input-instruction');
+		var starManager = $(levelList).find('StarManager');
+		fileInput.on('change', function(e) {
+			var files = $(this).prop('files');
+			if (files.length) {
+				fileInputList.empty();
+				starManager.empty();
+				fileInputInstruction.hide();
+				var fileNames = Array.from(new Set(Array.from(files).map(function(val) {
+					return val.name.match(/(.*?) - .*?/)[1];
+				}))).sort();
+				fileNames.forEach(function(val) {
+					fileInputList.append('<li>' + val + '</li>');
+				});
+
+				levelList.find('Level').each(function() {
+					var levelName = $(this).attr('level_name');
+					if (typeof levelName !== 'undefined' && levelName !== '') {
+						if (fileNames.indexOf(levelName.replace(/[^a-z0-9 ]/ig, '')) !== -1) {
+							$(this).attr("completed", 1);
+							starManager.append("<StarData id=\"" + $(this).attr("filename") + "\" value=\"1\"></StarData>\n");
+						} else {
+							console.log('No match: ' + levelName)
+						}
+					}
+
+				});
+				var s = new XMLSerializer();
+				fileOutput.attr('href', 'data:text/xml;charset=UTF-8,'  + encodeURIComponent(s.serializeToString(levelList.get(0))));
+			}
+		});
+});})(jQuery);
+	</script>
+</head>
+<body>
+<header><h1>Crayon Physics Deluxe Savegame Restore Helper</h1></header>
+<main><p>You can use this script to restore your savegame for the game Crayon Physics Deluxe Savegame Restore Helper. Just follow the two steps below</p>
+	<h2>1. Select all your saved level replays</h2>
+	<p>They are XML files you can find in <strong>C:\Users\(Username)\Documents\Crayon Physics Deluxe\My Solutions\</strong> on Windows or <strong>~/.CrayonPhysicsDeluxe/My Solutions/</strong> on Linux.</p>
+	<div id="file-input-wrap">
+		<div id="file-input-instruction">Click here to load the files</div>
+		<ol id="file-input-list"></ol>
+		<input type="file" name="file-input" id="file-input" multiple accept=".xml"/>
+	</div>
+	<h2>2. Download Save game</h2>
+	<p>Download the savegame to <strong>C:\Users\(Username)\AppData\Roaming\Crayon Physics Deluxe\data\</strong> folder on Windows or <strong>~/.CrayonPhysicsDeluxe/data/</strong> on Linux and save it as <strong>player_level_list.xml</strong> overwriting any existing files</p>
+	<a id="file-output" href="" download="player_level_list.xml">Click to Download</a>
+</main>
+<footer>
+	<p>Code 2020 by <a href="https://andrej.mernik.eu/" target="_blank">Andrej Mernik</a> | License MIT</p>
+</footer>
+</body>
+</html>
